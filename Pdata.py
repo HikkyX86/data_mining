@@ -1,12 +1,30 @@
 import re
 
 class processingData(object):
+    def convert(self, data):
+        cv_data = ''
+        i = 0
+        while i < len(data):
+            if data[i] == '[':
+                j = data.index(']', i)
+                elm = data[i+1:j]
+                cv_data += ' '.join(elm) + ' -1 '
+                i = j + 1
+            else:
+                cv_data += data[i]
+                i += 1
+        return cv_data
     def read_file(self, readfilename):
         lines_s = []
         with open(readfilename, 'r') as f:
             lines = f.readlines()
             for line in lines:
-                lines_s.append(line.strip())
+                seq = line.strip()
+                cv_seq = self.convert(seq)
+                lines_s.append(cv_seq.strip())
+        with open('data_cv.txt', 'w') as f:
+            for line in lines_s:
+                f.write(line + '\n')
         return lines_s
 
     def write_file(self, lines_s, filename):
@@ -21,17 +39,6 @@ class processingData(object):
                 items_no_repeat.append(item)
         sort_items = list(sorted(items_no_repeat))
         return sort_items, items_no_repeat
-    '''
-    S =
-    {
-    'a': [[0, 1, 3], [1], [0, 2, 4], [0, 1], [1, 3]],
-    'b': [[], [0], [2], [0], [4]],
-    'c': [[0, 1, 2, 3, 4], [1, 2], [0, 2, 3, 4, 5], [0, 1, 2, 3], [0, 1, 2, 3, 5]],
-    'd': [[], [3], [0], [], [0, 3]],
-    'e': [[], [1, 3], [4, 5], [3, 4], [5]],
-    'f': [[], [0], [1, 4], [4], []]
-    }
-    '''
 
     def item_to_dict(self, sort_items, len_lines, S):
         for i in sort_items:
