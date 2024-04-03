@@ -1,7 +1,4 @@
-from collections import defaultdict, OrderedDict
-import json
 import Pdata
-import pandas as pd
 import sys
 import time
 
@@ -17,7 +14,7 @@ def Matching_I(list1, list2):
     return count, list3
 
 def Matching_S(list1, list2):
-    list3 = [[] for k in range (SeqNum)]
+    list3 = [[] for _ in range (SeqNum)]
     flag = 0
     count = 0
     for i in range(SeqNum):
@@ -133,15 +130,14 @@ def Mine_Pattern(FP, ItemS):
     # print(FP)
     Join_S(FP, ExpSet, ItemS)
 
-
 def Miner():
     FP = []
     ItemS = {}
     Mine_ItemS(FP, ItemS)
     Mine_Pattern(FP, ItemS)
-    print("Frequent patterns:" + str(FP))
-    print("Number of frequent patterns:" + str(len(FP)))
-    print("Number of candidate patterns:" + str(CanNum))
+    print("- Frequent patterns:\n" + str(FP))
+    print("- Number of frequent patterns: " + str(len(FP)))
+    print("- Number of candidate patterns: " + str(CanNum))
 
 if __name__ == '__main__':
     try:
@@ -152,8 +148,9 @@ if __name__ == '__main__':
     SeqNum, S, sort_item = pdata.datap(readFileName, S)
     del pdata
     for minsup in sys.argv[2:]:
-        print('NFP-Miner:', readFileName, 'minsup=', minsup, ':')
+        print('- NFP-Miner:')
+        print('- Input:', readFileName,'with', 'minsup =', minsup + ':')
         starttime = time.time()
         Miner()
         endtime = time.time()
-        print ("Running time: " + str(int(round(endtime * 1000)) - int(round(starttime * 1000))) + "ms")
+        print ("- Running time: " + str(int(round(endtime * 1000)) - int(round(starttime * 1000))) + "ms")
