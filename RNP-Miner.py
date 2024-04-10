@@ -148,7 +148,7 @@ if __name__ == '__main__':
     SeqNum, S, sort_item = pdata.datap(readFileName, S)
     del pdata
     for minsup in sys.argv[2:]:
-        print('- NFP-Miner:')
+        print('- RNP-Miner:')
         print('- Input:', readFileName,'with', 'minsup =', minsup + ':')
         starttime = time.time()
         Miner()
